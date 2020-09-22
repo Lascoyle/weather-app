@@ -12,9 +12,17 @@
         </div>
 
         <div class="weather-box">
-          <div class="temp">{{ Math.round(weather.main.temp) }}°C</div>
+          <div class="temp-infos">
+            <div class="temp-main">{{ Math.round(weather.main.temp) }}°C</div>
+            <div class="temp temp-felt">Felt: {{ Math.round(weather.main.feels_like) }}°C</div>
+            <div class="temp-amp">
+              <div class="temp temp-min"><img class="temp-icon" src="./assets/icons/cold.png" alt=""> Min: {{ Math.round(weather.main.temp_min) }}°C</div>
+              <div class="temp temp-max"><img class="temp-icon" src="./assets/icons/warm.png" alt=""> Max: {{ Math.round(weather.main.temp_max) }}°C</div>
+            </div>
+          </div>
+          <img class="weather-icon" src="./assets/icons/clouds.png" alt="weather icon">
           <div class="weather">{{ weather.weather[0].main }}</div>
-          <div class="weather-description">{{ weather.weather[0].description }}</div>
+          <div class="weather-description">{{ weather.weather[0].description.charAt(0).toUpperCase() + weather.weather[0].description.slice(1) }}</div>
         </div>
       </div>
     </main>
@@ -30,7 +38,29 @@ export default {
       api_key: 'f743991771b320407a7f62578c7a83fd',
       url_base: 'https://api.openweathermap.org/data/2.5/',
       query: '',
-      weather: {}
+      weather: {},
+      icons: [
+        {
+          name: 'Rain',
+          src: require('./assets/icons/rain.png')
+        },
+        {
+          name: 'Clear',
+          src: require('./assets/icons/sun.png')
+        },
+        {
+          name: 'Snow',
+          src: require('./assets/icons/snowy.png')
+        },
+        {
+          name: 'Clouds',
+          src: require('./assets/icons/clouds.png')
+        },
+        {
+          name: 'Extreme',
+          src: require('./assets/icons/thunder.png')
+        },
+      ]
     }
   },
 
@@ -59,6 +89,10 @@ export default {
       let year = d.getFullYear();
 
       return `${day} ${date} ${month} ${year}`;
+    },
+
+    iconDisplayer () {
+      
     }
 
   }
@@ -128,7 +162,7 @@ main {
   font-weight: 300;
   font-style: italic;
   text-align :center;
-  margin-bottom: 70px;
+  margin-bottom: 40px;
 }
 
 .location-box .location {
@@ -142,16 +176,48 @@ main {
   text-align: center;
 }
 
-.weather-box .temp {
+.temp {
+  margin-top: 15px;
+}
+
+.temp-infos {
   display: inline-block;
-  padding: 10px 25px;
+  padding: 25px 25px;
   color: #ffffff;
+  border-radius: 10px;
+  background-color: rgba(136, 136, 136, 0.25);
+  margin: 30px 0px;
+}
+
+.temp-main {
   font-size: 80px;
   font-weight: 900;
-  text-shadow: 3px 6px rgba(0, 0, 0, 0.25);
-  background-color: rgba(255, 255, 255, 0.25);
-  border-radius: 15px;
-  margin: 30px 0px;
+  text-shadow: 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.temp-amp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.temp-icon {
+  display: block;
+  max-height: 30px;
+  margin: 0 auto;
+}
+
+.temp-min {
+  color: rgb(132, 220, 255);
+}
+
+.temp-max {
+  color: rgb(255, 167, 132);
+}
+
+.weather-icon {
+  display: block;
+  max-height: 60px;
+  margin: 0 auto;
 }
 
 .weather-box .weather{
